@@ -1,0 +1,9 @@
+﻿################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+/.vs
+
+### SQLite
+/exercise1/api/starbase.db-shm
+/exercise1/api/starbase.db-wal
