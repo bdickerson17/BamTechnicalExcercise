@@ -9,3 +9,12 @@ export interface ApiResponse {
 export interface AllPeopleResponse extends ApiResponse {
   people: PersonAstronaut[];
 }
+
+
+export interface PersonByNameResponse extends ApiResponse {
+  person: PersonAstronaut;
+}
+
+export interface CreatePersonResponse extends ApiResponse {
+  id: number;
+}
