@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { PersonAstronaut } from '../../models/PersonAstronaut';
 import { ActsAPIService } from 'src/app/services/acts-api.service';
+import { MatDialog } from '@angular/material/dialog';
+import { NewPersonDialogComponent } from '../new-person-dialog/new-person-dialog.component';
 
 @Component({
   selector: 'app-all-astronaut-dashboard',
@@ -14,12 +16,26 @@ export class AllAstronautDashboardComponent implements OnInit {
 
   expandedRow: PersonAstronaut | null = null;
 
-  constructor(private ActsAPIService: ActsAPIService) { }
+  constructor(private ActsAPIService: ActsAPIService, public dialog: MatDialog) { }
 
-    ngOnInit(): void {
-      this.ActsAPIService.getAstronauts().subscribe(astronauts => {
-        this.allAstronauts = astronauts;
-      });
+  ngOnInit(): void {
+    this.ActsAPIService.getAstronauts().subscribe(astronauts => {
+      this.allAstronauts = astronauts;
+    });
   }
 
+  openNewPersonDialog() {
+    const dialogRef = this.dialog.open(NewPersonDialogComponent, {
+      width: '400px'
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        // Refresh the astronauts list
+        this.ActsAPIService.getAstronauts().subscribe(astronauts => {
+          this.allAstronauts = astronauts;
+        });
+      }
+    });
+  }
 }

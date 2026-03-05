@@ -1,0 +1,19 @@
+<h2 mat-dialog-title>Add New Person</h2>
+<mat-dialog-content>
+  <form [formGroup]="personForm" (ngSubmit)="onSubmit()">
+    <mat-form-field appearance="fill" class="full-width">
+      <mat-label>Name</mat-label>
+      <input matInput formControlName="name" placeholder="Enter person's name" required>
+      <mat-error *ngIf="personForm.get('name')?.hasError('required')">
+        Name is required
+      </mat-error>
+      <mat-error *ngIf="personForm.get('name')?.hasError('minlength')">
+        Name must be at least 2 characters
+      </mat-error>
+    </mat-form-field>
+  </form>
+</mat-dialog-content>
+<mat-dialog-actions style="justify-content: end;">
+  <button mat-button (click)="onCancel()">Cancel</button>
+  <button mat-raised-button color="primary" (click)="onSubmit()" [disabled]="!personForm.valid">Create Person</button>
+</mat-dialog-actions>

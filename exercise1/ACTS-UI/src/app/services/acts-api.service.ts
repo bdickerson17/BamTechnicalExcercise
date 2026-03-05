@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, map } from 'rxjs';
 import { PersonAstronaut } from '../models/PersonAstronaut';
 import { AllPeopleResponse, CreatePersonResponse, PersonByNameResponse } from '../models/ApiResponse';
@@ -43,9 +43,14 @@ export class ActsAPIService {
   }
 
   CreatePerson(name: string): Observable<number> {
-    const url = `${this.baseApiUrl}Person/CreatePerson/${name}`;
+    const url = `${this.baseApiUrl}Person`;
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json'
+      })
+    };
 
-    return this.http.post<CreatePersonResponse>(url, { name }).pipe(
+    return this.http.post<CreatePersonResponse>(url, JSON.stringify(name), httpOptions).pipe(
       map(response => {
         if (response.success) {
           return response.id;

@@ -1,3 +1,11 @@
 <h3 class="title">All Astronauts Dashboard</h3>
+
+<!-- Action Buttons Row -->
+<div class="action-buttons">
+  <button mat-raised-button color="primary" (click)="openNewPersonDialog()">Add Person</button>
+  <button mat-raised-button>Add Astronaut</button>
+  <button mat-raised-button color="primary">Add Astronaut Duty</button>
+</div>
+
 <app-all-astronauts-table [allAstronauts]="this.allAstronauts"></app-all-astronauts-table>
 <app-no-data-placeholder *ngIf="this.allAstronauts.length == 0" [objectName]="'astronauts'"></app-no-data-placeholder>
