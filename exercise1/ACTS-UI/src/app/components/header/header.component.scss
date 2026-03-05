@@ -8,6 +8,15 @@
   box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
 
+.title{
+  justify-content: center;
+  display: flex;
+  flex-grow: 1;
+  color: #00053a;
+  // lighter blue color: #265AA6;
+  text-align: center;
+}
+
 .logo-container img {
   height: 53px;
 }
