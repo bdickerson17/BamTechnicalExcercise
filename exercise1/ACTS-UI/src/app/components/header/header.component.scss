@@ -1,0 +1,32 @@
+.app-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 16px;
+  height: 64px;
+  background-color: #fff;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.logo-container img {
+  height: 53px;
+}
+
+.nav-buttons {
+  display: flex;
+  gap: 8px;
+  flex: 1;
+  justify-content: flex-end;
+}
+
+.nav-buttons button {
+  color: #333;
+  font-size: 1.1rem;
+  padding: 0 12px;
+  min-width: 80px;
+}
+// remove default underline from links
+.nav-buttons a {
+  text-decoration: none;
+}
+
