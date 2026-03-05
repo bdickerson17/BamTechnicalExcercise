@@ -11,6 +11,8 @@ import { MatTableModule } from '@angular/material/table';
 import { MatIconModule } from '@angular/material/icon';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { AllAstronautDashboardComponent } from './components/all-astronaut-dashboard/all-astronaut-dashboard.component';
+import { ActsAPIService } from './services/acts-api.service';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -26,9 +28,10 @@ import { AllAstronautDashboardComponent } from './components/all-astronaut-dashb
     MatButtonModule,
     MatTableModule,
     MatIconModule,
-    MatExpansionModule
+    MatExpansionModule,
+    HttpClientModule
   ],
-  providers: [],
+  providers: [ActsAPIService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
