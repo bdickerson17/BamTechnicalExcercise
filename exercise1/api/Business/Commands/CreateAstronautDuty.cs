@@ -53,50 +53,21 @@ namespace StargateAPI.Business.Commands
         public async Task<CreateAstronautDutyResult> Handle(CreateAstronautDuty request, CancellationToken cancellationToken)
         {
 
-            var query = $"SELECT * FROM [Person] WHERE \'{request.Name}\' = Name";
 
-            var person = await _context.Connection.QueryFirstOrDefaultAsync<Person>(query);
+            var person = await _context.People.FirstOrDefaultAsync(p => p.Name == request.Name);
 
-            query = $"SELECT * FROM [AstronautDetail] WHERE {person.Id} = PersonId";
+            var currentAstronautDuty = await _context.People
+                .Where(p => p.Name == request.Name)
+                .FirstOrDefaultAsync();
 
-            var astronautDetail = await _context.Connection.QueryFirstOrDefaultAsync<AstronautDetail>(query);
-
-            if (astronautDetail == null)
+            //update currentAstronautDuty end date to one day before the new duty start date
+            if (currentAstronautDuty != null && currentAstronautDuty.AstronautDetail != null)
             {
-                astronautDetail = new AstronautDetail();
-                astronautDetail.PersonId = person.Id;
-                astronautDetail.CurrentDutyTitle = request.DutyTitle;
-                astronautDetail.CurrentRank = request.Rank;
-                astronautDetail.CareerStartDate = request.DutyStartDate.Date;
-                if (request.DutyTitle == "RETIRED")
-                {
-                    astronautDetail.CareerEndDate = request.DutyStartDate.Date;
-                }
-
-                await _context.AstronautDetails.AddAsync(astronautDetail);
-
-            }
-            else
-            {
-                astronautDetail.CurrentDutyTitle = request.DutyTitle;
-                astronautDetail.CurrentRank = request.Rank;
-                if (request.DutyTitle == "RETIRED")
-                {
-                    astronautDetail.CareerEndDate = request.DutyStartDate.AddDays(-1).Date;
-                }
-                _context.AstronautDetails.Update(astronautDetail);
+                currentAstronautDuty.AstronautDetail.DutyEndDate = request.DutyStartDate.AddDays(-1).Date;
+                _context.AstronautDuties.Update(currentAstronautDuty.AstronautDetail);
             }
 
-            query = $"SELECT * FROM [AstronautDuty] WHERE {person.Id} = PersonId Order By DutyStartDate Desc";
-
-            var astronautDuty = await _context.Connection.QueryFirstOrDefaultAsync<AstronautDuty>(query);
-
-            if (astronautDuty != null)
-            {
-                astronautDuty.DutyEndDate = request.DutyStartDate.AddDays(-1).Date;
-                _context.AstronautDuties.Update(astronautDuty);
-            }
-
+            //Create new AstronautDuty w/ DutyEndDate as null
             var newAstronautDuty = new AstronautDuty()
             {
                 PersonId = person.Id,
@@ -106,6 +77,10 @@ namespace StargateAPI.Business.Commands
                 DutyEndDate = null
             };
 
+            if (request.DutyTitle == "RETIRED")
+            {
+                newAstronautDuty.DutyEndDate = request.DutyStartDate.AddDays(-1).Date;
+            }
             await _context.AstronautDuties.AddAsync(newAstronautDuty);
 
             await _context.SaveChangesAsync();

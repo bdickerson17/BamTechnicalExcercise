@@ -40,7 +40,8 @@ The UI is expected to do the following:
 Overview
 Examine the code, find and resolve any flaws, if any exist. Identify design patterns and follow or change them. Provide fix(es) and be prepared to describe the changes.
 
-1. Generate the database [done via entity framework in program.cs]
+1. Generate the database 
+   * [done via entity framework in program.cs]
    * This is your source and storage location
 1. Enforce the rules
 1. Improve defensive coding
@@ -54,10 +55,21 @@ Examine the code, find and resolve any flaws, if any exist. Identify design patt
 
 ## Rules
 
-1. A Person is uniquely identified by their Name.
-1. A Person who has not had an astronaut assignment will not have Astronaut records.
+1. A Person is uniquely identified by their Name. 
+    * [done on person class]
+1. A Person who has not had an astronaut assignment will not have Astronaut records (AstronautRecords=AstronautDuties collection I assume).
+	* redundent requirement with change - if AstronautDuties is empty then A person is just a person
 1. A Person will only ever hold one current Astronaut Duty Title, Start Date, and Rank at a time.
+	* Instead of making AstronautDetails a separate field/table utilize a query not mapped to the DB because saving current duty separate from collection of duties is redundent as the two classes are the same. but the definitions say there should be a AstronautDetails table.
+	* Decided to go research how to implement this restriction on the AstronauntDuty class and was directed to use the HasFilter Method
 1. A Person's Current Duty will not have a Duty End Date.
+	- done via default value of EndDate.
 1. A Person's Previous Duty End Date is set to the day before the New Astronaut Duty Start Date when a new Astronaut Duty is received for a Person.
 1. A Person is classified as 'Retired' when a Duty Title is 'RETIRED'.
 1. A Person's Career End Date is one day before the Retired Duty Start Date.
+
+
+
+## Questions:
+
+1. Should Current AstronautDuty be included in the AstrpnautDuties list?

@@ -19,6 +19,7 @@ namespace StargateAPI.Business.Data
 
         public DateTime? DutyEndDate { get; set; }
 
+        //should this be nullable as AstronautDuties is a master list? Should be able to exist without being assinged to a Person?
         public virtual Person Person { get; set; }
     }
 
@@ -28,6 +29,18 @@ namespace StargateAPI.Business.Data
         {
             builder.HasKey(x => x.Id);
             builder.Property(x => x.Id).ValueGeneratedOnAdd();
+
+            builder.HasOne(d => d.Person)
+               .WithMany(p => p.AstronautDuties)
+               .HasForeignKey(d => d.PersonId)
+               .OnDelete(DeleteBehavior.Cascade);
+
+            //only one active/current duty per person
+            builder.HasIndex(x => x.PersonId)
+                .IsUnique()
+                .HasFilter("DutyEndDate IS NULL");
+            builder.Property(d => d.DutyEndDate)
+                .IsRequired(false); //even with ? in the class I want to ensure its clear DutyEndDate is nullable
         }
     }
 }

@@ -2,20 +2,53 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using StargateAPI.Business.Data;
 
 #nullable disable
 
-namespace StargateAPI.Migrations
+namespace StargateAPI.Business.Migrations
 {
     [DbContext(typeof(StargateContext))]
-    partial class StargateContextModelSnapshot : ModelSnapshot
+    [Migration("20260305042952_RemoveAstronautDetails")]
+    partial class RemoveAstronautDetails
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "8.0.4");
+
+            modelBuilder.Entity("StargateAPI.Business.Data.AstronautDetail", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<DateTime?>("CareerEndDate")
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime>("CareerStartDate")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("CurrentDutyTitle")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("CurrentRank")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<int>("PersonId")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("PersonId");
+
+                    b.ToTable("AstronautDetail");
+                });
 
             modelBuilder.Entity("StargateAPI.Business.Data.AstronautDuty", b =>
                 {
@@ -65,6 +98,17 @@ namespace StargateAPI.Migrations
                         .IsUnique();
 
                     b.ToTable("Person");
+                });
+
+            modelBuilder.Entity("StargateAPI.Business.Data.AstronautDetail", b =>
+                {
+                    b.HasOne("StargateAPI.Business.Data.Person", "Person")
+                        .WithMany()
+                        .HasForeignKey("PersonId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Person");
                 });
 
             modelBuilder.Entity("StargateAPI.Business.Data.AstronautDuty", b =>

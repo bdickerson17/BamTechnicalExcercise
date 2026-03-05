@@ -1,5 +1,7 @@
 ﻿using Dapper;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
+using System.Linq; 
 using StargateAPI.Business.Data;
 using StargateAPI.Business.Dtos;
 using StargateAPI.Controllers;
@@ -25,17 +27,31 @@ namespace StargateAPI.Business.Queries
 
             var result = new GetAstronautDutiesByNameResult();
 
-            var query = $"SELECT a.Id as PersonId, a.Name, b.CurrentRank, b.CurrentDutyTitle, b.CareerStartDate, b.CareerEndDate FROM [Person] a LEFT JOIN [AstronautDetail] b on b.PersonId = a.Id WHERE \'{request.Name}\' = a.Name";
+            var person = await _context.People
+                .Include(p => p.AstronautDuties)
+                .FirstOrDefaultAsync(p => p.Name == request.Name, cancellationToken);
 
-            var person = await _context.Connection.QueryFirstOrDefaultAsync<PersonAstronaut>(query);
+            if (person == null)
+            {
+                throw new Exception($"No person found with name {request.Name}");
+            }
+            else{
 
-            result.Person = person;
+                //would rather use mapper or constructor with person with astronautDuties included but this is fine for now
+                PersonAstronaut personAstronaut = new PersonAstronaut
+                {
+                    PersonId = person.Id,
+                    Name = person.Name,
+                    CurrentRank = person.AstronautDetail?.Rank,
+                    CurrentDutyTitle = person.AstronautDetail?.DutyTitle,
+                    CareerStartDate = person.AstronautDetail?.DutyStartDate,
+                    CareerEndDate = person.AstronautDetail?.DutyEndDate
+                };
 
-            query = $"SELECT * FROM [AstronautDuty] WHERE {person.PersonId} = PersonId Order By DutyStartDate Desc";
+                result.Person = personAstronaut;
+                result.AstronautDuties = person.AstronautDuties.ToList();
+            }
 
-            var duties = await _context.Connection.QueryAsync<AstronautDuty>(query);
-
-            result.AstronautDuties = duties.ToList();
 
             return result;
 
