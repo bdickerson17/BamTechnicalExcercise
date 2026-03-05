@@ -19,6 +19,7 @@ import { MatExpansionModule } from '@angular/material/expansion';
 import { HttpLoadingInterceptor } from './interceptors/http-loading.interceptor';
 import { ErrorHandlingInterceptor } from './interceptors/error-handling.interceptor';
 import { NoDataPlaceholderComponent } from './components/no-data-placeholder/no-data-placeholder.component';
+import { AllAstronautsTableComponent } from './components/all-astronauts-table/all-astronauts-table.component';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,8 @@ import { NoDataPlaceholderComponent } from './components/no-data-placeholder/no-
     HeaderComponent,
     FooterComponent,
     AllAstronautDashboardComponent,
-    NoDataPlaceholderComponent
+    NoDataPlaceholderComponent,
+    AllAstronautsTableComponent
   ],
   imports: [
     BrowserModule,
