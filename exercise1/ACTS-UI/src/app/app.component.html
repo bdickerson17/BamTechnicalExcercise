@@ -3,3 +3,8 @@
   <router-outlet></router-outlet>
 </div>
 <app-footer></app-footer>
+
+<!-- API Loading Spinner Overlay -->
+<div *ngIf="loading" class="loading-overlay">
+  <mat-spinner diameter="50"></mat-spinner>
+</div>
