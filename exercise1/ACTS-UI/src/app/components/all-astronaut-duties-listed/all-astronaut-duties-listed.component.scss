@@ -1,0 +1,28 @@
+.duties-container {
+  display: flex;
+  gap: .5rem;
+}
+
+.duty-box {
+  flex: 2 1 400px; /* grow, shrink, basis */
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  padding: 1rem;
+  margin-bottom: 1rem;
+  background-color: #fafafa;
+}
+
+.duty-row {
+  display: flex;
+  margin-bottom: 0.5rem;
+  min-width: 250px;
+}
+
+.duty-row label {
+  font-weight: bold;
+  width: 120px;
+}
+
+.duty-row span {
+  flex: 1;
+}

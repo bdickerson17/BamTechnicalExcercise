@@ -17,6 +17,8 @@ namespace StargateAPI.Business.Dtos
 
         public DateTime? CareerEndDate { get; set; }
 
+        public List<AstronautDutyDto> astronautDuties { get; set; } = new List<AstronautDutyDto> { };
+
         public PersonAstronaut()
         {
         }
@@ -40,6 +42,11 @@ namespace StargateAPI.Business.Dtos
             // Person.CareerEndDate is computed on Person (non-nullable)
             // set DTO CareerEndDate only when the person is retired
             CareerEndDate = person.IsRetired ? person.CareerEndDate : null;
+
+            astronautDuties = person.AstronautDuties != null ? person.AstronautDuties.Select(d =>
+            {
+                return new AstronautDutyDto(d);
+            }).ToList() : new List<AstronautDutyDto> { };
         }
     }
 }

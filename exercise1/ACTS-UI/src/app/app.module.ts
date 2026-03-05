@@ -25,6 +25,8 @@ import { AllAstronautsTableComponent } from './components/all-astronauts-table/a
 import { NewPersonDialogComponent } from './components/new-person-dialog/new-person-dialog.component';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { NewAstronautDutyDialogComponent } from './components/new-astronaut-duty-dialog/new-astronaut-duty-dialog.component';
+import { AllAstronautDutiesListedComponent } from './components/all-astronaut-duties-listed/all-astronaut-duties-listed.component';
 
 @NgModule({
   declarations: [
@@ -34,7 +36,9 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
     AllAstronautDashboardComponent,
     NoDataPlaceholderComponent,
     AllAstronautsTableComponent,
-    NewPersonDialogComponent
+    NewPersonDialogComponent,
+    NewAstronautDutyDialogComponent,
+    AllAstronautDutiesListedComponent
   ],
   imports: [
     BrowserModule,

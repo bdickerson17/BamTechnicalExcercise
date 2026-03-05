@@ -31,15 +31,8 @@ namespace StargateAPI.Business.Queries
                 .Include(p=>p.AstronautDuties)
                 .ToListAsync();
 
-            result.People = people.Select(p => new PersonAstronaut
-            {
-                PersonId = p.Id,
-                Name = p.Name,
-                CurrentRank = p.AstronautDetail != null ? p.AstronautDetail.Rank : null,
-                CurrentDutyTitle = p.AstronautDetail != null ? p.AstronautDetail.DutyTitle : null,
-                CareerStartDate = p.AstronautDetail != null ? p.AstronautDetail.DutyStartDate : null,
-                CareerEndDate = p.AstronautDetail != null ? p.AstronautDetail.DutyEndDate : null
-            }).ToList();
+
+            result.People = people.Select(p => new PersonAstronaut(p)).ToList();
 
             return result;
         }

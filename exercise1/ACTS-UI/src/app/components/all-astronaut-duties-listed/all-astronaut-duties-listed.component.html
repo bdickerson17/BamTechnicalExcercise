@@ -1,0 +1,27 @@
+<div *ngIf="duties && duties.length; else noDuties" class="duties-container">
+
+  <div class="duty-box" *ngFor="let duty of duties">
+    <div class="duty-row">
+      <label>Duty Title:</label>
+      <span>{{ duty.dutyTitle }}</span>
+    </div>
+    <div class="duty-row">
+      <label>Rank:</label>
+      <span>{{ duty.rank }}</span>
+    </div>
+    <div class="duty-row">
+      <label>Start Date:</label>
+      <span>{{ duty.dutyStartDate | date }}</span>
+    </div>
+    <div class="duty-row" *ngIf="duty.dutyEndDate">
+      <label>End Date:</label>
+      <span>{{ duty.dutyEndDate | date }}</span>
+    </div>
+  </div>
+</div>
+
+<ng-template #noDuties>
+  <app-no-data-placeholder objectName="duties"></app-no-data-placeholder>
+</ng-template>
+
+

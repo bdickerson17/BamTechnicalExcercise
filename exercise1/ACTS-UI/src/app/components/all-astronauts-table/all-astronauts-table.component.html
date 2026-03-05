@@ -42,7 +42,7 @@
   <ng-container matColumnDef="expandedDetail">
     <td mat-cell *matCellDef="let row" [attr.colspan]="displayedColumns.length">
       <div class="row-detail">
-        <h5>expansion works</h5>
+        <app-all-astronaut-duties-listed [duties]="row.astronautDuties"></app-all-astronaut-duties-listed>
       </div>
     </td>
   </ng-container>

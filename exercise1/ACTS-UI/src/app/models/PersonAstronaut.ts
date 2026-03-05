@@ -1,3 +1,5 @@
+import { AstronautDuty } from "./AstronautDuty";
+
 export class PersonAstronaut {
   personId: number;
   name: string = '';
@@ -6,13 +8,16 @@ export class PersonAstronaut {
   careerStartDate?: Date;
   careerEndDate?: Date;
 
+  astronautDuties?: AstronautDuty[]; // optional navigation property for related duties
+
   constructor(
     personId: number = 0,
     name: string = '',
     currentRank: string = '',
     currentDutyTitle: string = '',
     careerStartDate?: Date,
-    careerEndDate?: Date
+    careerEndDate?: Date,
+    astronautDuties?: AstronautDuty[]
   ) {
     this.personId = personId;
     this.name = name;
@@ -20,5 +25,6 @@ export class PersonAstronaut {
     this.currentDutyTitle = currentDutyTitle;
     this.careerStartDate = careerStartDate;
     this.careerEndDate = careerEndDate;
+    this.astronautDuties = astronautDuties;
   }
 }
