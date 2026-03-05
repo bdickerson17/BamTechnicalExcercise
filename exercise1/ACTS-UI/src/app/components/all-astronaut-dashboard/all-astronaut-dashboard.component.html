@@ -65,3 +65,5 @@
       [hidden]="expandedRow !== row">
   </tr>
 </table>
+
+<app-no-data-placeholder *ngIf="this.allAstronauts.length == 0" [objectName]="'astronauts'"></app-no-data-placeholder>

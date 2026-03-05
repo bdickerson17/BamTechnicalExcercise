@@ -13,13 +13,15 @@ import { MatExpansionModule } from '@angular/material/expansion';
 import { AllAstronautDashboardComponent } from './components/all-astronaut-dashboard/all-astronaut-dashboard.component';
 import { ActsAPIService } from './services/acts-api.service';
 import { HttpClientModule } from '@angular/common/http';
+import { NoDataPlaceholderComponent } from './components/no-data-placeholder/no-data-placeholder.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HeaderComponent,
     FooterComponent,
-    AllAstronautDashboardComponent
+    AllAstronautDashboardComponent,
+    NoDataPlaceholderComponent
   ],
   imports: [
     BrowserModule,
